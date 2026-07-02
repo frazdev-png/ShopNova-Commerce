@@ -1,0 +1,32 @@
+# ─── Secrets ───────────────────────────────────────
+.env
+backend/.env
+frontend/.env
+
+# ─── Dependencies ──────────────────────────────────
+node_modules/
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/app/**/*.pyc
+backend/alembic/**/*.pyc
+
+# ─── Build output ──────────────────────────────────
+frontend/dist/
+frontend/build/
+
+# ─── Database ──────────────────────────────────────
+*.db
+backend/logs/
+
+# ─── Uploads (dev) ─────────────────────────────────
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ─── IDE / OS ──────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~

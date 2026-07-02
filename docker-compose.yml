@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ecommerce
+      POSTGRES_PASSWORD: ecommerce_password
+      POSTGRES_DB: ecommerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ecommerce"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ecommerce:ecommerce_password@postgres:5432/ecommerce
+      SECRET_KEY: ${SECRET_KEY:-change-me-to-a-random-secret-min-32-chars}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      REFRESH_TOKEN_EXPIRE_MINUTES: 43200
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      APP_NAME: "Ecommerce API"
+      APP_VERSION: "1.0.0"
+      APP_DEBUG: "false"
+      LOG_LEVEL: INFO
+      RATE_LIMIT_ENABLED: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_logs:/app/logs
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
+  backend_logs:
