@@ -26,7 +26,7 @@ const AdminNotificationContext = createContext<AdminNotificationContextType | nu
 export function AdminNotificationProvider({ children }: { children: React.ReactNode }) {
   const toast = useToast();
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimer = useRef<ReturnType<typeof setTimeout>>();
+  const reconnectTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mountedRef = useRef(true);
   const generationRef = useRef(0);
 

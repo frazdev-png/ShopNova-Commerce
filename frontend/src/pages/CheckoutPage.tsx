@@ -49,7 +49,7 @@ export default function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState<string>("");
   const [selectedPayment, setSelectedPayment] = useState("");
   const [formErrors, setFormErrors] = useState<Partial<ShippingForm>>({});
-  const [loadingAddresses, setLoadingAddresses] = useState(true);
+  const [, setLoadingAddresses] = useState(true);
   const [saveAddress, setSaveAddress] = useState(true);
 
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
         addressId = newAddr.id;
       }
 
-      const order = await orderService.create({
+      await orderService.create({
         shipping_address_id: addressId,
         payment_method: selectedPayment,
         notes: shippingForm.notes || undefined,

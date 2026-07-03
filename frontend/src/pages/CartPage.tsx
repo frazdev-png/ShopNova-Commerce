@@ -10,8 +10,8 @@ import { useToast } from "../store";
 
 export default function CartPage() {
   const toast = useToast();
-  const { items, count, total, loading, refresh, updateItem, removeItem } = useCart();
-  const [orderLoading, setOrderLoading] = useState(false);
+  const { items, count, total, loading, updateItem, removeItem } = useCart();
+  const [orderLoading] = useState(false);
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
 

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function AdminNotificationBell({ align = "right" }: Props) {
-  const { notifications, unread, loading, open, setOpen, markAllRead, markRead } = useAdminNotifications();
+  const { notifications, unread, loading, open, setOpen, markAllRead } = useAdminNotifications();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const markDoneRef = useRef(false);
 

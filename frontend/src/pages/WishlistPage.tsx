@@ -14,9 +14,10 @@ export default function WishlistPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = () => {
+  const load = async () => {
     setLoading(true);
-    const ids = wishlistService.getAll();
+    const res = await wishlistService.getAll();
+    const ids = res.items.map((i) => i.product_id);
     if (ids.length === 0) {
       setProducts([]);
       setLoading(false);
@@ -24,7 +25,7 @@ export default function WishlistPage() {
     }
     // Fetch all products and filter by wishlist ids
     productService.list()
-      .then((res) => setProducts(res.items.filter((p) => ids.includes(p.id))))
+      .then((productsRes) => setProducts(productsRes.items.filter((p) => ids.includes(p.id))))
       .catch(() => {})
       .finally(() => setLoading(false));
   };

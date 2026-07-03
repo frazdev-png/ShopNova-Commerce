@@ -9,7 +9,7 @@ export default function SupportChat() {
   const [connected, setConnected] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const reconnectTimer = useRef<ReturnType<typeof setTimeout>>();
+  const reconnectTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const scrollDown = () => bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 

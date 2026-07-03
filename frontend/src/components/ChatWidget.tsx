@@ -4,14 +4,14 @@ import { formatTime } from "../utils/time";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
-  const [chatId, setChatId] = useState<string | null>(null);
+  const [, setChatId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(true);
   const wsRef = useRef<WebSocket | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const reconnectTimer = useRef<ReturnType<typeof setTimeout>>();
+  const reconnectTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const scrollDown = () => bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 
