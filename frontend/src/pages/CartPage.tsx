@@ -7,6 +7,7 @@ import EmptyState from "../components/ui/EmptyState";
 import { CartIcon, XIcon } from "../components/ui/Icons";
 import { useCart } from "../store";
 import { useToast } from "../store";
+import { getImageUrl } from "../utils/image";
 
 export default function CartPage() {
   const toast = useToast();
@@ -80,7 +81,7 @@ export default function CartPage() {
             <Card key={item.id} className="flex gap-4 p-4">
               <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-50 to-gray-100 rounded-xl flex-shrink-0 overflow-hidden border border-gray-200">
                 {item.image_url ? (
-                  <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                  <img src={getImageUrl(item.image_url)} alt={item.title} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

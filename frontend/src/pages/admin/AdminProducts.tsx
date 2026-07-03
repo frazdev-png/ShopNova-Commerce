@@ -8,6 +8,7 @@ import Modal from "../../components/ui/Modal";
 import EmptyState from "../../components/ui/EmptyState";
 import { TableSkeleton } from "../../components/ui/Skeleton";
 import { useToast } from "../../store";
+import { getImageUrl } from "../../utils/image";
 
 export default function AdminProducts() {
   const toast = useToast();
@@ -95,7 +96,7 @@ export default function AdminProducts() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gradient-to-br from-primary-50 to-gray-100 dark:from-primary-900/30 dark:to-gray-800">
                           {p.image_url ? (
-                            <img src={p.image_url} alt={p.title} className="w-full h-full object-cover" />
+                            <img src={getImageUrl(p.image_url)} alt={p.title} className="w-full h-full object-cover" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
                               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

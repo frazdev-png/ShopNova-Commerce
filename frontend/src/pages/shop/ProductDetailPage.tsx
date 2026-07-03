@@ -6,6 +6,7 @@ import Badge from "../../components/ui/Badge";
 import Rating from "../../components/ui/Rating";
 import { HeartIcon, HeartFilledIcon, CartIcon } from "../../components/ui/Icons";
 import { useToast, useAuth, useCart, useWishlist } from "../../store";
+import { getImageUrl } from "../../utils/image";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -102,7 +103,7 @@ export default function ProductDetailPage() {
           <div className="aspect-square bg-gradient-to-br from-primary-50 to-gray-100 rounded-2xl overflow-hidden border border-gray-200">
             {product.image_url && !imgError ? (
               <img
-                src={product.image_url}
+                src={getImageUrl(product.image_url)}
                 alt={product.title}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 onError={() => setImgError(true)}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Product } from "../services/product";
 import { useWishlist } from "../store";
 import { HeartIcon, HeartFilledIcon, StarIcon } from "./ui/Icons";
+import { getImageUrl } from "../utils/image";
 
 interface ProductCardProps {
   product: Product;
@@ -47,7 +48,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         {product.image_url && !imgError ? (
           <>
             <img
-              src={product.image_url}
+              src={getImageUrl(product.image_url)}
               alt={product.title}
               loading="lazy"
               onLoad={() => setImgLoaded(true)}

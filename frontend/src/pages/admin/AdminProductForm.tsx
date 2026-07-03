@@ -9,6 +9,7 @@ import Input from "../../components/ui/Input";
 import Card from "../../components/ui/Card";
 import Spinner from "../../components/ui/Spinner";
 import { useToast } from "../../store";
+import { getImageUrl } from "../../utils/image";
 
 export default function AdminProductForm() {
   const { id } = useParams();
@@ -45,7 +46,7 @@ export default function AdminProductForm() {
           stock: String(p.stock),
           category: p.category || "",
         });
-        if (p.image_url) setImagePreview(p.image_url);
+        if (p.image_url) setImagePreview(getImageUrl(p.image_url));
       }).catch(() => navigate("/admin/products")).finally(() => setLoadingProduct(false));
     }
   }, [id, navigate]);

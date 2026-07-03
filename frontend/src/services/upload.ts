@@ -26,7 +26,6 @@ export const uploadService = {
     }
 
     const data = await res.json();
-    const baseUrl = import.meta.env.VITE_API_URL?.replace("/api", "") || "http://localhost:8000";
-    return `${baseUrl}${data.url}`;
+    return data.url;
   },
 };
