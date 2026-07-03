@@ -17,6 +17,9 @@ PyJWT>=2.9.0
 # WebSocket
 websockets>=13.0
 
+# File uploads (required by FastAPI for multipart form data)
+python-multipart>=0.0.12
+
 # Migrations
 alembic>=1.14.0
 
