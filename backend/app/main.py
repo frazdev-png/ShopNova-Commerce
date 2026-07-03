@@ -95,6 +95,12 @@ async def lifespan(app: FastAPI):
     await engine.dispose()
 
 
+print("=" * 50, flush=True)
+print(f"  {settings.app_name} v{settings.app_version}", flush=True)
+db_type = "PostgreSQL" if settings.is_postgres else "SQLite"
+print(f"  Database: {db_type}  |  Debug: {settings.app_debug}", flush=True)
+print("=" * 50, flush=True)
+
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,

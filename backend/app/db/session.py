@@ -8,6 +8,11 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
+# IMPORTANT: async_database_url MUST be evaluated FIRST because it triggers
+# _to_asyncpg_url() which populates the _asyncpg_connect_args global.
+# If we build connect_args first, SSL settings are missing.
+_db_url = settings.async_database_url
+
 _engine_options: dict = {
     "echo": settings.app_debug,
     "pool_pre_ping": True,
@@ -21,7 +26,7 @@ if settings.is_postgres:
         "server_settings": {"application_name": "shopnova-api"},
     }
 
-engine = create_async_engine(settings.async_database_url, **_engine_options)
+engine = create_async_engine(_db_url, **_engine_options)
 
 
 @event.listens_for(engine.sync_engine, "connect")
