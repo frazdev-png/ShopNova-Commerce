@@ -34,6 +34,20 @@ class ProductCreate(BaseModel):
             raise ValueError("Stock cannot be negative")
         return v
 
+    @field_validator("image_url")
+    @classmethod
+    def strip_absolute_url(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        for protocol in ("http://", "https://"):
+            if v.startswith(protocol):
+                slash = v.find("/", len(protocol))
+                if slash >= 0:
+                    path = v[slash:]
+                    if path.startswith("/uploads/"):
+                        return path
+        return v
+
 
 class ProductUpdate(BaseModel):
     title: Optional[str] = None
@@ -43,6 +57,20 @@ class ProductUpdate(BaseModel):
     stock: Optional[int] = None
     category: Optional[str] = None
     is_active: Optional[bool] = None
+
+    @field_validator("image_url")
+    @classmethod
+    def strip_absolute_url(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        for protocol in ("http://", "https://"):
+            if v.startswith(protocol):
+                slash = v.find("/", len(protocol))
+                if slash >= 0:
+                    path = v[slash:]
+                    if path.startswith("/uploads/"):
+                        return path
+        return v
 
 
 class ProductResponse(BaseModel):
