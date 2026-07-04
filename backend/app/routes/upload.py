@@ -1,10 +1,12 @@
-import os
-import uuid
+import io
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from fastapi.responses import FileResponse
 
+from app.core.config import settings
 from app.core.dependencies import require_admin
 from app.models.user import User
 
@@ -13,6 +15,12 @@ router = APIRouter(prefix="/upload", tags=["upload"])
 UPLOAD_DIR = Path(__file__).resolve().parent.parent.parent / "uploads"
 ALLOWED_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp"}
 MAX_SIZE = 5 * 1024 * 1024  # 5MB
+
+cloudinary.config(
+    cloud_name=settings.cloudinary_cloud_name,
+    api_key=settings.cloudinary_api_key,
+    api_secret=settings.cloudinary_api_secret,
+)
 
 
 @router.post("/image", status_code=status.HTTP_201_CREATED)
@@ -27,18 +35,15 @@ async def upload_image(
     if len(contents) > MAX_SIZE:
         raise HTTPException(status_code=400, detail="File too large. Max 5MB")
 
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-    ext = Path(file.filename).suffix if file.filename else ".jpg"
-    filename = f"{uuid.uuid4().hex}{ext}"
-    filepath = UPLOAD_DIR / filename
-
-    with open(filepath, "wb") as f:
-        f.write(contents)
+    result = cloudinary.uploader.upload(
+        io.BytesIO(contents),
+        folder=settings.cloudinary_folder,
+        resource_type="image",
+    )
 
     return {
-        "url": f"/uploads/{filename}",
-        "filename": filename,
+        "url": result["secure_url"],
+        "filename": result["public_id"],
     }
 
 

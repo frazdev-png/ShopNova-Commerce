@@ -77,6 +77,11 @@ class Settings(BaseSettings):
 
     free_shipping_threshold: float = 50.0
 
+    cloudinary_cloud_name: str = ""
+    cloudinary_api_key: str = ""
+    cloudinary_api_secret: str = ""
+    cloudinary_folder: str = "ecommerce"
+
     @property
     def async_database_url(self) -> str:
         return _to_asyncpg_url(self.database_url)

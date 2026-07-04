@@ -24,3 +24,11 @@ services:
         value: "120"
       - key: RATE_LIMIT_LOGIN_REQUESTS
         value: "10"
+      - key: CLOUDINARY_CLOUD_NAME
+        value: jrowsl81
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: ecommerce

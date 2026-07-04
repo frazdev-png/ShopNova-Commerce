@@ -20,6 +20,9 @@ websockets>=13.0
 # File uploads (required by FastAPI for multipart form data)
 python-multipart>=0.0.12
 
+# Cloudinary (production image hosting)
+cloudinary>=1.41.0
+
 # Migrations
 alembic>=1.14.0
 
